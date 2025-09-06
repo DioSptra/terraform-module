@@ -15,12 +15,14 @@ variable "azs" {
 
 # 2 pilihan untuk subnet: either explicit cidrs, or auto-calc via mask
 variable "public_subnet_cidrs" {
-  type        = optional(list(string), null)
+  type        = list(string)
+  default     = null
   description = "List CIDR untuk public subnets; jika null, akan dihitung otomatis dari vpc_cidr"
 }
 
 variable "private_subnet_cidrs" {
-  type        = optional(list(string), null)
+  type        = list(string)
+  default     = null
   description = "List CIDR untuk private subnets; jika null, akan dihitung otomatis dari vpc_cidr"
 }
 
