@@ -13,11 +13,15 @@ resource "aws_nat_gateway" "nat" {
 
 # buat private subnets & route tables yang pakai nat
 resource "aws_subnet" "private" {
-  count = length(local.azs)
+  count = var.create_nat_gateway && var.private_subnet_cidrs != null ? length(var.private_subnet_cidrs) : 0
+
   vpc_id            = aws_vpc.this.id
-  cidr_block        = var.private_subnet_cidrs != null && length(var.private_subnet_cidrs) > 0 ? var.private_subnet_cidrs[count.index] : cidrsubnet(var.vpc_cidr, var.public_subnet_newbits + 1, count.index)
+  cidr_block        = var.private_subnet_cidrs[count.index]
   availability_zone = local.azs[count.index]
-  tags = merge(var.tags, { Name = "${var.name}-private-${local.azs[count.index]}" })
+
+  tags = merge(var.tags, {
+    Name = "${var.name}-private-${local.azs[count.index]}"
+  })
 }
 
 resource "aws_route_table" "private" {
