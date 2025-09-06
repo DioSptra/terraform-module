@@ -47,3 +47,9 @@ variable "tags" {
   type    = map(string)
   default = {}
 }
+
+variable "enable_s3_endpoint" {
+  type        = bool
+  default     = false
+  description = "Kalau true, buat VPC endpoint ke S3"
+}
