@@ -34,7 +34,7 @@ variable "public_subnet_newbits" {
 
 variable "create_nat_gateway" {
   type    = bool
-  default = true
+  default = false
   description = "Buat NAT Gateway di setiap public subnet (bila ingin private subnet accès ke internet)"
 }
 
